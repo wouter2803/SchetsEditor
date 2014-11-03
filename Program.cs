@@ -8,7 +8,7 @@ namespace SchetsEditor
         [STAThread]
         static void Main()
         {
-            Application.Run(new Hoofdscherm(null));
+           Application.Run(new Hoofdscherm(null));
         }
     }
 }

@@ -54,5 +54,32 @@ namespace SchetsEditor
         {
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
+        
+        public void ZetInLijst(MaakObject obj)
+        {
+            LijstObjecten.Add(obj);
+            TekenLijst();
+        }
+
+        public void TekenLijst()
+        {
+            Schoon();
+            Graphics gr = BitmapGraphics;
+            foreach (MaakObject obj in LijstObjecten)
+            {
+                obj.Teken(gr);
+            }
+        }
+
+        public int LijstGrootte
+        {
+            get { return LijstObjecten.Count; }
+        }
+
+        public List<MaakObject> objecten
+        {
+            get { return LijstObjecten; }
+            set { LijstObjecten = value; }
+        }
     }
 }
