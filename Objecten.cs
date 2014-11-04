@@ -5,13 +5,16 @@ using System.Collections.Generic;
 
 namespace SchetsEditor
 {
-
+    
     public abstract class MaakObject
     {
         public Pen pen;
         public Brush Kwast;
+        public string Kleur;
         public Rectangle Rechthoek;
         public Point point1, point2;
+        public Point startpunt;
+        public string tekst;
 
         public abstract void Teken(Graphics gr);
         public abstract bool geklikt(SchetsControl s, Point p);
@@ -34,8 +37,6 @@ namespace SchetsEditor
 
     public class Startpunt : MaakObject
     {
-        public Point startpunt;
-
         public override void Teken(Graphics gr)
         {
             throw new NotImplementedException();
@@ -46,17 +47,21 @@ namespace SchetsEditor
         }
     }
 
+
     public class Tekstobject : Startpunt
     {
         public Font font;
-        public string tekst;
+        
 
         public Tekstobject(string s, Font f, Brush kwast, Point p)
         {
             this.font = f;
             this.tekst = s;
             this.Kwast = kwast;
+            this.pen = null;
             this.startpunt = p;
+
+            this.Kleur = new Pen(kwast).Color.ToString();
         }
 
         public override void Teken(Graphics gr)
@@ -77,8 +82,10 @@ namespace SchetsEditor
         public MaakLijn(Pen p, Point p1, Point p2)
         {
             this.pen = p;
+            this.Kwast = null;
             this.point1 = p1;
             this.point2 = p2;
+            this.Kleur = pen.Color.ToString();
         }
         public override void Teken(Graphics gr)
         {
@@ -97,8 +104,11 @@ namespace SchetsEditor
         public MaakPenObj(Pen p, Point p1, Point p2)
         {
             this.pen = p;
+            this.Kwast = null;
             this.point1 = p1;
             this.point2 = p2;
+
+            this.Kleur = pen.Color.ToString();
         }
 
         public override void Teken(Graphics gr)
@@ -117,7 +127,10 @@ namespace SchetsEditor
         public MaakKader(Pen p, Rectangle rechthoek)
         {
             this.pen = p;
+            this.Kwast = null;
             this.Rechthoek = rechthoek;
+
+            this.Kleur = pen.Color.ToString();
         }
 
         public override void Teken(Graphics gr)
@@ -147,7 +160,10 @@ namespace SchetsEditor
         public MaakRechthoek(Brush kwast, Rectangle rechthoek)
         {
             this.Kwast = kwast;
+            this.pen = null;
             this.Rechthoek = rechthoek;
+
+            this.Kleur = new Pen(kwast).Color.ToString();
         }
 
         public override void Teken(Graphics gr)
@@ -166,7 +182,10 @@ namespace SchetsEditor
         public MaakCirkel(Pen p, Rectangle rechthoek)
         {
             this.pen = p;
+            this.Kwast = null;
             this.Rechthoek = rechthoek;
+
+            this.Kleur = pen.Color.ToString();
         }
 
         public override void Teken(Graphics gr)
@@ -187,7 +206,10 @@ namespace SchetsEditor
         public MaakRondje(Brush kwast, Rectangle rechthoek)
         {
             this.Kwast = kwast;
+            this.pen = null;
             this.Rechthoek = rechthoek;
+
+            this.Kleur = new Pen(kwast).Color.ToString();
         }
 
         public override void Teken(Graphics gr)

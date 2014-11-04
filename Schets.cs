@@ -81,5 +81,10 @@ namespace SchetsEditor
             get { return LijstObjecten; }
             set { LijstObjecten = value; }
         }
+
+        public void RemoveLastFromList()
+        {
+            LijstObjecten.RemoveAt(LijstObjecten.Count - 1);
+        }
     }
 }

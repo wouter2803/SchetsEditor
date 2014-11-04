@@ -85,6 +85,7 @@ namespace SchetsEditor
             this.maakFileMenu();
             this.maakToolMenu(deTools);
             this.maakActieMenu(deKleuren);
+            this.MaakUndoButton(); //toegevoegd
             this.maakToolButtons(deTools);
             this.maakActieButtons(deKleuren);
             this.Resize += this.veranderAfmeting;
@@ -96,7 +97,15 @@ namespace SchetsEditor
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Opslaan", null, this.opslaan);
+            menu.DropDownItems.Add("Opslaan speciaal", null, this.opslaanspeciaal);
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
+            menuStrip.Items.Add(menu);
+        }
+
+        private void MaakUndoButton() 
+        {
+            ToolStripMenuItem menu = new ToolStripMenuItem("Undo");
+            menu.Click += schetscontrol.Undo;
             menuStrip.Items.Add(menu);
         }
 
@@ -181,6 +190,49 @@ namespace SchetsEditor
             paneel.Controls.Add(cbb);
         }
 
+        private void opslaanspeciaal(object s, EventArgs e)
+        {
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Txt|*.txt";
+            save.Title = "Save a File";
+            save.ShowDialog();
+
+            StreamWriter filestream = new StreamWriter(save.OpenFile());
+
+            if (save.FileName != "")
+            {
+                foreach (MaakObject obj in schetscontrol.objecten)
+                {   
+                    string line = "";
+                    line += obj.ToString() + '_';
+                    line += obj.Kleur + '_';
+                    if (obj.Rechthoek != null)
+                        line += obj.Rechthoek.ToString() + '_';
+                    else
+                        line += "Null";
+                    if (obj.point1 != null)
+                        line += obj.point1.ToString() + '_';
+                    else
+                        line += "Null";
+                    if (obj.point2 != null)
+                        line += obj.point2.ToString() + '_';
+                    else
+                        line += "Null";
+                    if (obj.startpunt != null)
+                        line += obj.startpunt.ToString() + '_';
+                    else
+                        line += "Null";
+                    if (obj.tekst != null)
+                        line += obj.tekst;
+
+                    filestream.WriteLine(line);
+                }
+            }
+
+            filestream.Close();
+        }
+
         private void opslaan(object sender, EventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
@@ -215,5 +267,10 @@ namespace SchetsEditor
             set { this.schetscontrol.SetBitmap = value; }
         }
 
+        public Schets zetschetsobject
+        {
+            get { return schetscontrol.zetschetobject; }
+            set { schetscontrol.zetschetobject = value; }
+        }
     }
 }

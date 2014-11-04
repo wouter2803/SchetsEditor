@@ -57,6 +57,13 @@ namespace SchetsEditor
         {   schets.Roteer();
             this.veranderAfmeting(o, ea);
         }
+
+        public void Undo(object o, EventArgs ea)//zelf
+        {
+            schets.RemoveLastFromList();
+            Schoon(o, ea);
+            schets.TekenLijst();
+        }
         public void VeranderKleur(object obj, EventArgs ea)
         {   string kleurNaam = ((ComboBox)obj).Text;
             penkleur = Color.FromName(kleurNaam);
@@ -86,5 +93,13 @@ namespace SchetsEditor
         {
             schets.TekenLijst();
         }
+
+        public Schets zetschetobject
+        {
+            get { return schets; }
+            set { schets = value; }
+        }
+
+        
     }
 }
