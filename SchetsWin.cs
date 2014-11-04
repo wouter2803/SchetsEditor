@@ -97,7 +97,6 @@ namespace SchetsEditor
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Opslaan", null, this.opslaan);
-            menu.DropDownItems.Add("Opslaan speciaal", null, this.opslaanspeciaal);
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
             menuStrip.Items.Add(menu);
         }
@@ -190,76 +189,67 @@ namespace SchetsEditor
             paneel.Controls.Add(cbb);
         }
 
-        private void opslaanspeciaal(object s, EventArgs e)
+        private void opslaan(object s, EventArgs e)
         {
-
             SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Txt|*.txt";
+            save.Filter = "Txt|*.txt|Jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
             save.Title = "Save a File";
             save.ShowDialog();
 
-            StreamWriter filestream = new StreamWriter(save.OpenFile());
-
             if (save.FileName != "")
             {
-                foreach (MaakObject obj in schetscontrol.objecten)
-                {   
-                    string line = "";
-                    line += obj.ToString() + '_';
-                    line += obj.Kleur + '_';
-                    if (obj.Rechthoek != null)
-                        line += obj.Rechthoek.ToString() + '_';
-                    else
-                        line += "Null";
-                    if (obj.point1 != null)
-                        line += obj.point1.ToString() + '_';
-                    else
-                        line += "Null";
-                    if (obj.point2 != null)
-                        line += obj.point2.ToString() + '_';
-                    else
-                        line += "Null";
-                    if (obj.startpunt != null)
-                        line += obj.startpunt.ToString() + '_';
-                    else
-                        line += "Null";
-                    if (obj.tekst != null)
-                        line += obj.tekst;
-
-                    filestream.WriteLine(line);
-                }
-            }
-
-            filestream.Close();
-        }
-
-        private void opslaan(object sender, EventArgs e)
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
-            save.Title = "Save a File";
-            save.ShowDialog();
-
-            FileStream filestream = (FileStream)save.OpenFile();
-
-            if (save.FileName != "")
-            {
-                switch (save.FilterIndex)
+                if (save.FilterIndex == 1)
                 {
-                    case 1:
-                        this.schetscontrol.GetBitmap.Save(filestream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        break;
-                    case 2:
-                        this.schetscontrol.GetBitmap.Save(filestream, System.Drawing.Imaging.ImageFormat.Bmp);
-                        break;
+                    StreamWriter filestream = new StreamWriter(save.OpenFile());
 
-                    case 3:
-                        this.schetscontrol.GetBitmap.Save(filestream, System.Drawing.Imaging.ImageFormat.Gif);
-                        break;
+                    foreach (MaakObject obj in schetscontrol.objecten)
+                    {
+                        string line = "";
+                        line += obj.ToString() + '_';
+                        line += obj.Kleur + '_';
+                        if (obj.Rechthoek != null)
+                            line += obj.Rechthoek.ToString() + '_';
+                        else
+                            line += "Null";
+                        if (obj.point1 != null)
+                            line += obj.point1.ToString() + '_';
+                        else
+                            line += "Null";
+                        if (obj.point2 != null)
+                            line += obj.point2.ToString() + '_';
+                        else
+                            line += "Null";
+                        if (obj.startpunt != null)
+                            line += obj.startpunt.ToString() + '_';
+                        else
+                            line += "Null";
+                        if (obj.tekst != null)
+                            line += obj.tekst;
+
+                        filestream.WriteLine(line);
+                    }
+                    filestream.Close();
+                }
+                else
+                {
+                    FileStream filestream = (FileStream)save.OpenFile();
+
+                        switch (save.FilterIndex)
+                        {
+                            case 1:
+                                this.schetscontrol.GetBitmap.Save(filestream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                break;
+                            case 2:
+                                this.schetscontrol.GetBitmap.Save(filestream, System.Drawing.Imaging.ImageFormat.Bmp);
+                                break;
+
+                            case 3:
+                                this.schetscontrol.GetBitmap.Save(filestream, System.Drawing.Imaging.ImageFormat.Gif);
+                                break;
+                        }
+                    filestream.Close();
                 }
             }
-
-            filestream.Close();
         }
 
         public Bitmap setbitmap // zelf
