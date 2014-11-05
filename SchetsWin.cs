@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
-using System.IO; //zelf
+using System.IO;
 
 namespace SchetsEditor
 {
@@ -85,7 +85,8 @@ namespace SchetsEditor
             this.maakFileMenu();
             this.maakToolMenu(deTools);
             this.maakActieMenu(deKleuren);
-            this.MaakUndoButton(); //toegevoegd
+            //toegevoegd
+            this.MaakUndoButton(); 
             this.maakToolButtons(deTools);
             this.maakActieButtons(deKleuren);
             this.Resize += this.veranderAfmeting;
@@ -96,11 +97,13 @@ namespace SchetsEditor
         {   
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
+            //toegevoegd
             menu.DropDownItems.Add("Opslaan", null, this.opslaan);
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
             menuStrip.Items.Add(menu);
         }
 
+        //toegevoegd
         private void MaakUndoButton() 
         {
             ToolStripMenuItem menu = new ToolStripMenuItem("Undo");
@@ -189,48 +192,49 @@ namespace SchetsEditor
             paneel.Controls.Add(cbb);
         }
 
+        //toegevoegd
         private void opslaan(object s, EventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Txt|*.txt|Jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
+            save.Filter = "Text|*.txt|Jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
             save.Title = "Save a File";
             save.ShowDialog();
 
             if (save.FileName != "")
             {
-                if (save.FilterIndex == 1)
+                if (save.FilterIndex == 1) // indien text
                 {
                     StreamWriter filestream = new StreamWriter(save.OpenFile());
 
                     foreach (MaakObject obj in schetscontrol.objecten)
                     {
                         string line = "";
-                        line += obj.ToString() + '_';
-                        line += obj.Kleur + '_';
-                        if (obj.Rechthoek != null)
+                        line += obj.ToString() + '_'; //objecttype
+                        line += obj.Kleur + '_'; //objectkleur
+                        if (obj.Rechthoek != null) //rechthoek van object
                             line += obj.Rechthoek.ToString() + '_';
                         else
                             line += "Null";
-                        if (obj.point1 != null)
+                        if (obj.point1 != null) //punt1 van object
                             line += obj.point1.ToString() + '_';
                         else
                             line += "Null";
-                        if (obj.point2 != null)
+                        if (obj.point2 != null) //punt 2 van object
                             line += obj.point2.ToString() + '_';
                         else
                             line += "Null";
-                        if (obj.startpunt != null)
+                        if (obj.startpunt != null) //startpunt van object
                             line += obj.startpunt.ToString() + '_';
                         else
                             line += "Null";
-                        if (obj.tekst != null)
+                        if (obj.tekst != null) //eventuele tekst
                             line += obj.tekst;
 
                         filestream.WriteLine(line);
                     }
                     filestream.Close();
                 }
-                else
+                else //indien gebruiker voor een afbeeldingsformaat kiest
                 {
                     FileStream filestream = (FileStream)save.OpenFile();
 
@@ -252,11 +256,13 @@ namespace SchetsEditor
             }
         }
 
-        public Bitmap setbitmap // zelf
+        //toegevoegd
+        public Bitmap setbitmap
         {
             set { this.schetscontrol.SetBitmap = value; }
         }
 
+        //toegevoegd
         public Schets zetschetsobject
         {
             get { return schetscontrol.zetschetobject; }

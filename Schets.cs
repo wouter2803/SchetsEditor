@@ -7,6 +7,7 @@ namespace SchetsEditor
     public class Schets
     {
         private Bitmap bitmap;
+        //toegevoegd, dit wordt de lijst waarin de getekende objecten worden opgeslagen
         private List<MaakObject> LijstObjecten = new List<MaakObject>();
          
         public Schets()
@@ -18,11 +19,13 @@ namespace SchetsEditor
             get { return Graphics.FromImage(bitmap); }
         }
 
-        public Bitmap returnbitmap //zelf
+        //toegevoegd om de bitmap te kunnen gebruiken in andere klassen
+        public Bitmap returnbitmap 
         {
             get { return this.bitmap; }
         }
 
+        //toegevoegd om de bitmap te kunnen veranderen vanuit andere klassen
         public Bitmap setbitmap //zelf
         {
             set { this.bitmap = value; }
@@ -55,12 +58,14 @@ namespace SchetsEditor
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
         
+        //toegevoegd, 
         public void ZetInLijst(MaakObject obj)
         {
             LijstObjecten.Add(obj);
             TekenLijst();
         }
 
+        //toegevoegd
         public void TekenLijst()
         {
             Schoon();
@@ -71,20 +76,23 @@ namespace SchetsEditor
             }
         }
 
+        //toegevoegd
         public int LijstGrootte
         {
             get { return LijstObjecten.Count; }
         }
 
+        //toegevoegd
         public List<MaakObject> objecten
         {
             get { return LijstObjecten; }
             set { LijstObjecten = value; }
         }
 
+        //toegevoegd
         public void RemoveLastFromList()
         {
-            if (objecten.Count > 0)
+            if (LijstGrootte > 0)
                 LijstObjecten.RemoveAt(LijstObjecten.Count - 1);
         }
     }

@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 
 namespace SchetsEditor
 {
@@ -45,9 +44,6 @@ namespace SchetsEditor
                 SizeF sz = 
                 gr.MeasureString(tekst, font, this.startpunt, StringFormat.GenericTypographic);
                 s.ZetInLijst(new Tekstobject(tekst, font, kwast, this.startpunt));
-                //gr.DrawString   (tekst, font, kwast, 
-                                              //this.startpunt, StringFormat.GenericTypographic);
-                // gr.DrawRectangle(Pens.Black, startpunt.X, startpunt.Y, sz.Width, sz.Height);
                 startpunt.X += (int)sz.Width;
                 s.Invalidate();
             }
@@ -77,17 +73,12 @@ namespace SchetsEditor
         }
         public override void MuisLos(SchetsControl s, Point p)
         {   base.MuisLos(s, p);
-            this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
             s.Invalidate();
         }
         public override void Letter(SchetsControl s, char c)
         {
         }
         public abstract void Bezig(Graphics g, Point p1, Point p2);
-        
-        public virtual void Compleet(Graphics g, Point p1, Point p2)
-        {   //this.Bezig(g, p1, p2);
-        }
     }
 
     public class RechthoekTool : TweepuntTool
@@ -105,7 +96,7 @@ namespace SchetsEditor
         }
     }
     
-    public class VolRechthoekTool : TweepuntTool //veranderd omdat ik anders 2 items in mijn lijst krijg
+    public class VolRechthoekTool : TweepuntTool //veranderd omdat ik anders 2 items in mijn lijst krijgt
     {
         public override string ToString() { return "vlak"; }
 
@@ -114,6 +105,7 @@ namespace SchetsEditor
             g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
 
+        //toegevoegd
         public override void MuisLos(SchetsControl s, Point p)
         {
             base.MuisLos(s, p);
@@ -129,7 +121,8 @@ namespace SchetsEditor
         {   g.DrawLine(MaakPen(this.kwast,3), p1.X, p1.Y, p2.X, p2.Y);
         }
 
-        public override void MuisLos(SchetsControl s, Point p)//zelf
+        //toegevoegd
+        public override void MuisLos(SchetsControl s, Point p)
         {
             base.MuisLos(s, p);
             s.ZetInLijst(new MaakLijn(MaakPen(this.kwast,3), startpunt, p));
@@ -138,12 +131,7 @@ namespace SchetsEditor
 
     public class PenTool : LijnTool
     {
-        public MaakPenObj penobj;
-
         public override string ToString() { return "pen"; }
-
-        public override void Bezig(Graphics g, Point p1, Point p2)
-        { }
 
         public override void MuisDrag(SchetsControl s, Point p)
         {   
@@ -162,7 +150,7 @@ namespace SchetsEditor
         public override string ToString() { return "gum"; }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
-        { //leeg
+        { //leeg maar verplicht
         }
 
         public override void MuisVast(SchetsControl s, Point p)
@@ -178,7 +166,8 @@ namespace SchetsEditor
         }
     }
 
-    public class CirkelTool : TweepuntTool //zelf
+    //toegevoegd
+    public class CirkelTool : TweepuntTool
     {
         public override string ToString() { return "cirkel"; }
 
@@ -194,7 +183,8 @@ namespace SchetsEditor
         }
     }
 
-    public class VolCirkelTool : TweepuntTool //zelf
+    //toegevoegd
+    public class VolCirkelTool : TweepuntTool
     {
         public override string ToString() { return "rondje"; }
 

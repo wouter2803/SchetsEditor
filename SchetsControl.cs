@@ -16,11 +16,14 @@ namespace SchetsEditor
             get { return penkleur; } 
         }
 
+
+        //toegevoegd
         public Bitmap GetBitmap
         {
             get { return this.schets.returnbitmap; }
         }
 
+        //toegevoegd
         public Bitmap SetBitmap
         {
             set { this.schets.setbitmap = value; }
@@ -49,6 +52,7 @@ namespace SchetsEditor
             g.SmoothingMode = SmoothingMode.AntiAlias;
             return g;
         }
+        //aangepast
         public void Schoon(object o, EventArgs ea)
         {   schets.Schoon();
             this.objecten.Clear();
@@ -59,7 +63,8 @@ namespace SchetsEditor
             this.veranderAfmeting(o, ea);
         }
 
-        public void Undo(object o, EventArgs ea)//zelf
+        //toegevoegd
+        public void Undo(object o, EventArgs ea)
         {
             schets.RemoveLastFromList();
             schets.Schoon();
@@ -75,11 +80,13 @@ namespace SchetsEditor
             penkleur = Color.FromName(kleurNaam);
         }
         
+        //toegevoegd
         public void ZetInLijst(MaakObject obj)
         {
             schets.ZetInLijst(obj);
         }
-
+        
+        //toegevoegd
         public int LijstGrootte
         {
             get { return schets.LijstGrootte; }
@@ -91,17 +98,17 @@ namespace SchetsEditor
             set { schets.objecten = value; }
         }
 
+        //toegevoegd
         public void TekenLijst()
         {
             schets.TekenLijst();
         }
 
+        //toegevoegd
         public Schets zetschetobject
         {
             get { return schets; }
             set { schets = value; }
         }
-
-        
     }
 }

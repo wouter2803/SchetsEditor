@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace SchetsEditor
 {
-    
     public abstract class MaakObject
     {
         public Pen pen;
@@ -31,27 +30,12 @@ namespace SchetsEditor
             //http://nl.wikipedia.org/wiki/Afstand#Afstand_tussen_een_punt_en_een_lijn
             double afstand = Math.Abs(dy * p.X - dx * p.Y - point1.X * point2.Y + point2.X * point1.Y) / Math.Sqrt(dx * dx + dy * dy);
             return afstand;
-        }
-        
+        } 
     }
 
-    public class Startpunt : MaakObject
-    {
-        public override void Teken(Graphics gr)
-        {
-            throw new NotImplementedException();
-        }
-        public override bool geklikt(SchetsControl s, Point p)
-        {
-            return false;
-        }
-    }
-
-
-    public class Tekstobject : Startpunt
+    public class Tekstobject : MaakObject
     {
         public Font font;
-        
 
         public Tekstobject(string s, Font f, Brush kwast, Point p)
         {
@@ -60,7 +44,6 @@ namespace SchetsEditor
             this.Kwast = kwast;
             this.pen = null;
             this.startpunt = p;
-
             this.Kleur = new Pen(kwast).Color.ToString();
         }
 
@@ -99,7 +82,6 @@ namespace SchetsEditor
     }
 
     public class MaakPenObj : MaakObject
-
     {
         public MaakPenObj(Pen p, Point p1, Point p2)
         {

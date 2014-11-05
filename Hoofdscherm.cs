@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO; //zelf
+using System.IO;
 
 
 namespace SchetsEditor
@@ -37,6 +37,8 @@ namespace SchetsEditor
             menu.DropDownItems.Add("Over \"Schets\"", null, this.about);
             menuStrip.Items.Add(menu);
         }
+
+        //kleine toevoeging met onze namen
         private void about(object o, EventArgs ea)
         {   MessageBox.Show("Schets versie 1.0\n(c) UU Informatica 2010\n Edited by Wouter Sondagh and Lars van Valen"
                            , "Over \"Schets\""
@@ -50,7 +52,8 @@ namespace SchetsEditor
             s.MdiParent = this;
             s.Show();
         }
-//hier van alles gedaan
+
+        //deze methode toegevoegd
         private void openen(object sender, EventArgs e)
         {
             SchetsWin s = new SchetsWin();
@@ -58,8 +61,7 @@ namespace SchetsEditor
 
             schets = s.zetschetsobject;
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Txt|*.txt";
-            open.Filter = "text|*.txt|Jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
+            open.Filter = "Text|*.txt|Jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
             open.Title = "Open a File";
             open.ShowDialog();
             string[] line;
@@ -69,7 +71,7 @@ namespace SchetsEditor
             {
                 StreamReader filereader = new StreamReader(open.FileName);
 
-                if (open.FilterIndex == 1)
+                if (open.FilterIndex == 1) //Indien Text is gekozen als openfile
                 {
                     while ((regel = filereader.ReadLine()) != null)
                     {
@@ -161,7 +163,7 @@ namespace SchetsEditor
                         s.Show();
                     }
                 }
-                else
+                else //indien het geen text is, is het dus een afbeelding. dat wordt hier afgehandeld
                 {
                         Bitmap bm = new Bitmap(open.FileName);
                         s.setbitmap = bm;
