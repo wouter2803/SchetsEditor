@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO; //zelf
-using System.Collections.Generic;//zelf
+
 
 namespace SchetsEditor
 {
@@ -38,7 +38,7 @@ namespace SchetsEditor
             menuStrip.Items.Add(menu);
         }
         private void about(object o, EventArgs ea)
-        {   MessageBox.Show("Schets versie 1.0\n(c) UU Informatica 2010"
+        {   MessageBox.Show("Schets versie 1.0\n(c) UU Informatica 2010\n Edited by Wouter Sondagh and Lars van Valen"
                            , "Over \"Schets\""
                            , MessageBoxButtons.OK
                            , MessageBoxIcon.Information

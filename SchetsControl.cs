@@ -51,6 +51,7 @@ namespace SchetsEditor
         }
         public void Schoon(object o, EventArgs ea)
         {   schets.Schoon();
+            this.objecten.Clear();
             this.Invalidate();
         }
         public void Roteer(object o, EventArgs ea)
@@ -61,7 +62,8 @@ namespace SchetsEditor
         public void Undo(object o, EventArgs ea)//zelf
         {
             schets.RemoveLastFromList();
-            Schoon(o, ea);
+            schets.Schoon();
+            this.Invalidate();
             schets.TekenLijst();
         }
         public void VeranderKleur(object obj, EventArgs ea)

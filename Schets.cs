@@ -84,7 +84,8 @@ namespace SchetsEditor
 
         public void RemoveLastFromList()
         {
-            LijstObjecten.RemoveAt(LijstObjecten.Count - 1);
+            if (objecten.Count > 0)
+                LijstObjecten.RemoveAt(LijstObjecten.Count - 1);
         }
     }
 }
